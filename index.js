@@ -40,25 +40,30 @@ Airplane.prototype.land = function () {
 */
 
 function Person(name, age) {
-  return {
-    name,
-    age,
-    stomach: [],
-    eat(someFood) {
-      if (this.stomach.length < 10) {
-        this.stomach.push(someFood);
-      }
-    },
-    poop() {
-      this.stomach.length = 0;
-    },
-    toString() {
-      return `${this.name}, ${this.age}`
-    }
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
+
+Person.prototype.eat = function(edible) {
+  if(this.stomach.length < 10) {
+    this.stomach.push(edible);
   }
+};
+
+Person.prototype.poop = function() {
+  this.stomach = [];
+};
+
+Person.prototype.toString = function() {
+  return `${this.name}, ${this.age}`
 }
 
 
+const mary = new Person('Mary', 50);
+console.log(mary);
+mary.eat('potato');
+console.log(mary.stomach);
 
 /*
   TASK 2
@@ -75,28 +80,35 @@ function Person(name, age) {
 */
 
 function Car(model, milesPerGallon) {
-  return {
-    model,
-    milesPerGallon,
-    tank: 0,
-    odometer: 0,
-    fill(gallons) {
-      if (typeof gallons === 'number') {
-        this.tank = this.tank + gallons;
-      } else {
-        return `Please input a number for gallons`;
-      }
-    }
-  }
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
 }
+
+Car.prototype.fill = function(gallons) {
+  if (typeof gallons === 'number') {
+    this.tank = this.tank + gallons;
+  } else {
+    return `Please input a number for gallons`;
+  }
+};
+Car.prototype.drive = function(distance) {
+  if (distance <= (this.fuel / 2)) {
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - (distance / 2);
+  } else {
+    return `Not enough fuel to continue!`;
+  }
+};
 
 // Testing car
 const betaCar = new Car('Beta', 20);
-console.log(betaCar.tank);
+//console.log(betaCar.tank);
 betaCar.fill(50);
 console.log(betaCar.tank);
-console.log(betaCar.fill('Not a Number'));
-
+//console.log(betaCar.fill('Not a Number'));
+console.log(betaCar.drive(120));
 
 /*
   TASK 3
@@ -105,10 +117,19 @@ console.log(betaCar.fill('Not a Number'));
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
 
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function() {
+  return `Playing with ${this.favoriteToy}`
+}
+
+const tabbi = new Baby('Tabbi', 1, 'binky');
+console.log(tabbi);
+console.log(tabbi.play());
 
 /* 
   TASK 4
