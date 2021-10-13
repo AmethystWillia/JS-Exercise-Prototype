@@ -98,7 +98,7 @@ Car.prototype.drive = function(distance) {
     this.odometer = this.odometer + distance;
     this.tank = this.tank - (distance / 2);
   } else {
-    return `Not enough fuel to continue!`;
+    return `Not enough fuel to drive!`;
   }
 };
 
@@ -134,10 +134,10 @@ console.log(tabbi.play());
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Global Binding - bound to the window/console log (this is usually an error if you incorrectly ound something)
+  2. Implicit Binding - bound to whatever is to the left of `this`
+  3. Explicit Binding - bound using `call` or `apply`, overrides constructor objects
+  4. New Binding - when using a constuctor function `this` is bound to the new instance of the created object
 */
 
 
