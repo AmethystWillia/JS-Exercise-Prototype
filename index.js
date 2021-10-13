@@ -74,9 +74,28 @@ function Person(name, age) {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  return {
+    model,
+    milesPerGallon,
+    tank: 0,
+    odometer: 0,
+    fill(gallons) {
+      if (typeof gallons === 'number') {
+        this.tank = this.tank + gallons;
+      } else {
+        return `Please input a number for gallons`;
+      }
+    }
+  }
 }
+
+// Testing car
+const betaCar = new Car('Beta', 20);
+console.log(betaCar.tank);
+betaCar.fill(50);
+console.log(betaCar.tank);
+console.log(betaCar.fill('Not a Number'));
 
 
 /*
